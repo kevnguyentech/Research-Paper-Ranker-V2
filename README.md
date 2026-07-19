@@ -114,6 +114,7 @@ python -m pytest tests/ -v
 
 ## Project structure
 
+```bash
 research-paper-ranker-v2/
 ├── src/
 │   ├── __init__.py
@@ -136,6 +137,7 @@ research-paper-ranker-v2/
 ├── .gitignore
 ├── requirements.txt
 └── README.md
+```
 ## Cache
 
 Every API response is cached to `data/cache/` for 7 days. Repeat runs on the same topic are instant. Pass `--refresh` to force a fresh fetch.
