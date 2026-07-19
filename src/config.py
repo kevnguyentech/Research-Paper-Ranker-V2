@@ -25,10 +25,7 @@ SBERT_MODEL = "all-MiniLM-L6-v2"
 NOVELTY_LAMBDA  = 0.3
 TOP_N_DEFAULT   = 10
 
-# Anthropic
-SYNTH_MODEL      = "claude-sonnet-4-6"
 SYNTH_MAX_TOKENS = 300
 
 # API keys
-S2_API_KEY       = os.getenv("S2_API_KEY", "")
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
+S2_API_KEY = os.getenv("S2_API_KEY", "")
