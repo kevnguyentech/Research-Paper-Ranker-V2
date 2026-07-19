@@ -67,9 +67,9 @@ def classify_tiers(papers: list[dict]) -> list[dict]:
 
     for paper in papers:
         c = paper.get("citationCount") or 0
-        if c >= p75:
+        if c > p75:
             paper["tier"] = "Foundational"
-        elif c <= p25:
+        elif c < p25:
             paper["tier"] = "Cutting Edge"
         else:
             paper["tier"] = "Core"
