@@ -22,7 +22,7 @@ Version 1 was author-centric. You needed to know who you were looking for before
 **Requirements:** Python 3.11+
 
 ```bash
-git clone https://github.com/your-username/research-paper-ranker-v2
+git clone https://github.com/kevnguyentech/Research-Paper-Ranker-V2
 cd research-paper-ranker-v2
 python -m venv .venv
 .venv\Scripts\Activate.ps1        # Windows
