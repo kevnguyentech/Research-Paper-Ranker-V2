@@ -8,6 +8,8 @@ GROQ_URL     = "https://api.groq.com/openai/v1/chat/completions"
 
 
 def synthesize(topic: str, papers: list[dict]) -> str:
+    if not GROQ_API_KEY:
+        raise ValueError("GROQ_API_KEY is not set. Add it to your .env file (free at https://console.groq.com).")
     paper_lines = []
     for i, p in enumerate(papers, 1):
         abstract_snippet = (p.get("abstract") or "")[:200]
