@@ -23,7 +23,7 @@ Version 1 was author-centric. You needed to know who you were looking for before
 
 ```bash
 git clone https://github.com/kevnguyentech/Research-Paper-Ranker-V2
-cd research-paper-ranker-v2
+cd Research-Paper-Ranker-V2
 python -m venv .venv
 .venv\Scripts\Activate.ps1        # Windows
 source .venv/bin/activate          # Mac/Linux
@@ -115,7 +115,7 @@ python -m pytest tests/ -v
 ## Project structure
 
 ```bash
-research-paper-ranker-v2/
+Research-Paper-Ranker-V2/
 ├── src/
 │   ├── __init__.py
 │   ├── config.py          # constants, env vars, path setup
