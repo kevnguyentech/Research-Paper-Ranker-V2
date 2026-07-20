@@ -67,12 +67,12 @@ def fetch_by_topic(query: str, limit: int = 100, refresh: bool = False) -> list[
     return papers
 
 
-def resolve_paper(query: str) -> str | None:
+def resolve_paper(query: str, refresh: bool = False) -> str | None:
     if re.fullmatch(r"[0-9a-f]{40}", query.strip()):
         return query.strip()
 
     cache = _cache_path("resolve_" + re.sub(r"\W+", "_", query.lower())[:60])
-    if _cache_valid(cache):
+    if not refresh and _cache_valid(cache):
         return json.loads(cache.read_text()).get("paperId")
 
     params = {"query": query, "fields": "paperId,title", "limit": 1}

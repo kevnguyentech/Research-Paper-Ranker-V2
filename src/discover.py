@@ -69,7 +69,7 @@ def main():
         topic_label = args.topic
     else:
         print(f"Resolving seed paper: {args.seed}")
-        paper_id = resolve_paper(args.seed)
+        paper_id = resolve_paper(args.seed, refresh=args.refresh)
         if not paper_id:
             print(f"Could not resolve paper: {args.seed}")
             sys.exit(1)

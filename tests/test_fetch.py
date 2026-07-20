@@ -52,6 +52,17 @@ def test_resolve_paper_passthrough_hex_id():
 
 
 @patch("src.fetch_papers.requests.get")
+def test_resolve_paper_refresh_bypasses_cache(mock_get):
+    mock_get.side_effect = _mock_get({"data": [MOCK_PAPER]})
+    resolve_paper("Test Paper Refresh Check")  # populates cache with paperId "abc123"
+
+    stale = {**MOCK_PAPER, "paperId": "stale999", "title": "Stale Cached Title"}
+    mock_get.side_effect = _mock_get({"data": [stale]})
+    pid = resolve_paper("Test Paper Refresh Check", refresh=True)
+    assert pid == "stale999"
+
+
+@patch("src.fetch_papers.requests.get")
 def test_fetch_citations_forward(mock_get):
     mock_get.side_effect = _mock_get({"data": [{"citingPaper": MOCK_PAPER}]})
     papers = fetch_citations("abc123", direction="forward", refresh=True)
