@@ -13,6 +13,7 @@ PAPERS = [
 ]
 
 
+@patch("src.synthesize.GROQ_API_KEY", "test-key")
 @patch("src.synthesize.requests.post")
 def test_synthesize_returns_string(mock_post):
     mock_post.return_value.json.return_value = {
