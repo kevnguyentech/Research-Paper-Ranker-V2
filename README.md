@@ -46,7 +46,7 @@ The S2 key raises your rate limit from 1 request/second to 10. Without it the to
 **Topic mode** -- search by research question:
 
 ```bash
-python src/discover.py \
+python -m src.discover \
   --topic "contrastive learning" \
   --interests "self-supervised visual representation"
 ```
@@ -54,7 +54,7 @@ python src/discover.py \
 **Seed mode** -- expand from a paper you already know:
 
 ```bash
-python src/discover.py \
+python -m src.discover \
   --seed "Attention is all you need" \
   --interests "transformers NLP" \
   --direction backward
@@ -63,7 +63,7 @@ python src/discover.py \
 **With all options:**
 
 ```bash
-python src/discover.py \
+python -m src.discover \
   --topic "meta-learning few-shot" \
   --interests "fast adaptation low data regimes" \
   --already-read "paper title one, paper title two" \
