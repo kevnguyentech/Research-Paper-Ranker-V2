@@ -27,5 +27,9 @@ TOP_N_DEFAULT   = 10
 
 SYNTH_MAX_TOKENS = 300
 
+# Groq
+GROQ_MODEL = "openai/gpt-oss-20b"
+GROQ_URL   = "https://api.groq.com/openai/v1/chat/completions"
+
 # API keys
 S2_API_KEY = os.getenv("S2_API_KEY", "")
