@@ -50,7 +50,7 @@ def _get(url: str, params: dict) -> dict:
 
 def fetch_by_topic(query: str, limit: int = 100, refresh: bool = False) -> list[dict]:
     """Search papers by topic or research question."""
-    cache_key = "topic_" + re.sub(r"\W+", "_", query.lower())[:60]
+    cache_key = "topic_" + re.sub(r"\W+", "_", query.lower())[:60] + f"_n{limit}"
     cache = _cache_path(cache_key)
 
     if not refresh and _cache_valid(cache):
@@ -108,7 +108,7 @@ def fetch_citations(
         if direction not in (dir_label, "both"):
             continue
 
-        cache = _cache_path(f"{dir_label}_{paper_id}")
+        cache = _cache_path(f"{dir_label}_{paper_id}_n{limit}")
 
         if not refresh and _cache_valid(cache):
             for p in json.loads(cache.read_text()):
