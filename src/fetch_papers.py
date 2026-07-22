@@ -33,7 +33,7 @@ def _get(url: str, params: dict) -> dict:
     delay = 0.15 if S2_API_KEY else REQUEST_DELAY
 
     for attempt in range(5):
-        time.sleep(delay * (2 ** attempt))
+        time.sleep(delay)
         resp = requests.get(url, params=params, headers=headers, timeout=15)
         if resp.status_code == 429:
             wait = int(resp.headers.get("Retry-After", 5)) + attempt * 2
