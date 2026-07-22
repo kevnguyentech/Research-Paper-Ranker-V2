@@ -32,4 +32,5 @@ GROQ_MODEL = "openai/gpt-oss-20b"
 GROQ_URL   = "https://api.groq.com/openai/v1/chat/completions"
 
 # API keys
-S2_API_KEY = os.getenv("S2_API_KEY", "")
+S2_API_KEY   = os.getenv("S2_API_KEY", "")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")

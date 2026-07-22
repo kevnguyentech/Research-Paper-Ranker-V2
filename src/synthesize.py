@@ -1,8 +1,5 @@
-import os
 import requests
-from src.config import SYNTH_MAX_TOKENS, GROQ_MODEL, GROQ_URL
-
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+from src.config import SYNTH_MAX_TOKENS, GROQ_MODEL, GROQ_URL, GROQ_API_KEY
 
 
 def synthesize(topic: str, papers: list[dict]) -> str:
