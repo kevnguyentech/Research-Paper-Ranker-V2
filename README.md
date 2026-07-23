@@ -32,8 +32,10 @@ python -m pip install -r requirements.txt
 
 Copy `.env.example` to `.env` and fill in your keys:
 
-S2_API_KEY=your_semantic_scholar_key                
+```env
+S2_API_KEY=your_semantic_scholar_key
 GROQ_API_KEY=your_groq_key
+```
 
 Both are free:
 - Semantic Scholar API key: https://www.semanticscholar.org/product/api
