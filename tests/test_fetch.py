@@ -41,7 +41,7 @@ def test_fetch_by_topic_filters_no_abstract(mock_get):
 @patch("src.fetch_papers.requests.get")
 def test_resolve_paper_returns_id(mock_get):
     mock_get.side_effect = _mock_get({"data": [MOCK_PAPER]})
-    pid = resolve_paper("Test Paper", )
+    pid = resolve_paper("Test Paper", refresh=True)
     assert pid == "abc123"
 
 
