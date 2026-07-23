@@ -45,4 +45,7 @@ Be specific. Name actual papers and authors."""
     }
     resp = requests.post(GROQ_URL, headers=headers, json=body, timeout=30)
     resp.raise_for_status()
-    return resp.json()["choices"][0]["message"]["content"]
+    choices = resp.json().get("choices", [])
+    if not choices:
+        raise ValueError(f"Groq returned no choices. Response: {resp.text[:300]}")
+    return choices[0]["message"]["content"]
