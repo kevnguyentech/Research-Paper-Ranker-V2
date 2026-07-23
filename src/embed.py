@@ -44,7 +44,7 @@ def rank(
     scored = []
     for paper, emb in zip(papers, paper_embs):
         relevance = _cosine(emb, interest_emb)
-        if len(read_embs) > 0:
+        if read_embs:
             max_redundancy = max(_cosine(emb, r) for r in read_embs)
         else:
             max_redundancy = 0.0
