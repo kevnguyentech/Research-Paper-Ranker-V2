@@ -33,12 +33,23 @@ def _get(url: str, params: dict) -> dict:
     delay = 0.15 if S2_API_KEY else REQUEST_DELAY
 
     for attempt in range(5):
-        time.sleep(delay)
-        resp = requests.get(url, params=params, headers=headers, timeout=15)
+        try:
+            time.sleep(delay)
+            resp = requests.get(url, params=params, headers=headers, timeout=15)
+        except requests.exceptions.RequestException as exc:
+            if attempt == 4:
+                raise RuntimeError(f"S2 API: network error after 5 attempts: {exc}") from exc
+            print(f"Network error (attempt {attempt + 1}/5): {exc}. Retrying...")
+            continue
         if resp.status_code == 429:
             wait = int(resp.headers.get("Retry-After", 5)) + attempt * 2
             print(f"Rate limited. Waiting {wait}s...")
             time.sleep(wait)
+            continue
+        if resp.status_code >= 500:
+            if attempt == 4:
+                resp.raise_for_status()
+            print(f"Server error {resp.status_code} (attempt {attempt + 1}/5). Retrying...")
             continue
         resp.raise_for_status()
         return resp.json()
