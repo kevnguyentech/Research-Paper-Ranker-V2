@@ -32,6 +32,8 @@ def export_markdown(papers: list[dict], topic: str, synthesis: str | None, path:
     for i, p in enumerate(papers, 1):
         authors = p.get("authors", [])
         first_author = authors[0]["name"] if authors else "Unknown"
+        abstract = p.get("abstract", "")
+        abstract_snippet = abstract[:300] + ("..." if len(abstract) > 300 else "")
         lines.append(
             f"### {i}. {p['title']}\n"
             f"**Tier:** {p['tier']} | "
@@ -39,7 +41,7 @@ def export_markdown(papers: list[dict], topic: str, synthesis: str | None, path:
             f"**Year:** {p.get('year', '?')} | "
             f"**Citations:** {p.get('citationCount', 0)}\n\n"
             f"**Authors:** {first_author} et al.\n\n"
-            f"{p.get('abstract', '')[:300]}...\n"
+            f"{abstract_snippet}\n"
         )
     path.write_text("\n".join(lines), encoding="utf-8")
     print(f"\nSaved to {path}")
