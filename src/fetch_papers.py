@@ -42,7 +42,10 @@ def _get(url: str, params: dict) -> dict:
             print(f"Network error (attempt {attempt + 1}/5): {exc}. Retrying...")
             continue
         if resp.status_code == 429:
-            wait = int(resp.headers.get("Retry-After", 5)) + attempt * 2
+            try:
+                wait = int(resp.headers.get("Retry-After", 5)) + attempt * 2
+            except (ValueError, TypeError):
+                wait = 5 + attempt * 2
             print(f"Rate limited. Waiting {wait}s...")
             time.sleep(wait)
             continue
