@@ -9,7 +9,7 @@ def synthesize(topic: str, papers: list[dict]) -> str:
     for i, p in enumerate(papers, 1):
         abstract_snippet = (p.get("abstract") or "")[:200]
         authors = p.get("authors", [])
-        first_author = authors[0]["name"] if authors else "Unknown"
+        first_author = (authors[0].get("name") or "Unknown") if authors else "Unknown"
         line = (
             f"{i}. {p['title']} "
             f"({p.get('year', '?')}, {p.get('citationCount', 0)} citations, {first_author} et al.)\n"
