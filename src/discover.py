@@ -14,7 +14,7 @@ def print_results(papers: list[dict], topic: str) -> None:
     print(f"{'='*60}\n")
     for i, p in enumerate(papers, 1):
         authors = p.get("authors", [])
-        first_author = authors[0]["name"] if authors else "Unknown"
+        first_author = (authors[0].get("name") or "Unknown") if authors else "Unknown"
         print(
             f"{i:2}. [{p['tier']:12}] score={p['final_score']:.3f}\n"
             f"    {p['title']}\n"
@@ -31,7 +31,7 @@ def export_markdown(papers: list[dict], topic: str, synthesis: str | None, path:
     lines.append("## Papers\n")
     for i, p in enumerate(papers, 1):
         authors = p.get("authors", [])
-        first_author = authors[0]["name"] if authors else "Unknown"
+        first_author = (authors[0].get("name") or "Unknown") if authors else "Unknown"
         abstract = p.get("abstract", "")
         abstract_snippet = abstract[:300] + ("..." if len(abstract) > 300 else "")
         lines.append(
@@ -43,6 +43,7 @@ def export_markdown(papers: list[dict], topic: str, synthesis: str | None, path:
             f"**Authors:** {first_author} et al.\n\n"
             f"{abstract_snippet}\n"
         )
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")
     print(f"\nSaved to {path}")
 
