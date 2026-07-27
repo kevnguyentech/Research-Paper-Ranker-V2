@@ -13,6 +13,8 @@ from src.config import (
     S2_API_KEY,
 )
 
+CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
 
 # ── helpers ───────────────────────────────────────────────────────────────────
 
