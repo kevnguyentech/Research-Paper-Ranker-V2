@@ -33,8 +33,9 @@ def _get(url: str, params: dict) -> dict:
     delay = 0.15 if S2_API_KEY else REQUEST_DELAY
 
     for attempt in range(5):
-        try:
+        if attempt > 0:
             time.sleep(delay)
+        try:
             resp = requests.get(url, params=params, headers=headers, timeout=15)
         except requests.exceptions.RequestException as exc:
             if attempt == 4:
