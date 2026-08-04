@@ -40,12 +40,16 @@ def rank(
     interest_emb = encode([interests])[0]
 
     read_embs = list(encode(already_read)) if already_read else []
+    # already_read is title-only text (typed on the CLI, no abstract available), so
+    # compare it against title-only paper embeddings -- keeps both sides of the
+    # redundancy check in the same representation instead of title vs. title+abstract.
+    title_embs = encode([p["title"] for p in papers]) if read_embs else None
 
     scored = []
-    for paper, emb in zip(papers, paper_embs):
+    for i, (paper, emb) in enumerate(zip(papers, paper_embs)):
         relevance = _cosine(emb, interest_emb)
         if read_embs:
-            max_redundancy = max(_cosine(emb, r) for r in read_embs)
+            max_redundancy = max(_cosine(title_embs[i], r) for r in read_embs)
         else:
             max_redundancy = 0.0
         final = relevance - NOVELTY_LAMBDA * max_redundancy
