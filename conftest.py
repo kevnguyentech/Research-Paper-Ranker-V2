@@ -1,3 +1,5 @@
+import hashlib
+
 import numpy as np
 import pytest
 from unittest.mock import patch
@@ -14,10 +16,13 @@ def no_fetch_sleep():
 def mock_sbert_encode():
     """Return deterministic fake embeddings -- avoids loading/downloading the SBERT model."""
     def _fake(texts):
-        rng = np.random.default_rng(0)
-        arr = rng.random((len(texts), 8)).astype(np.float32)
-        norms = np.linalg.norm(arr, axis=1, keepdims=True)
-        return arr / (norms + 1e-9)
+        vecs = []
+        for t in texts:
+            seed = int(hashlib.md5(t.encode()).hexdigest()[:8], 16)
+            rng = np.random.default_rng(seed)
+            v = rng.random(8).astype(np.float32)
+            vecs.append(v / (np.linalg.norm(v) + 1e-9))
+        return np.array(vecs)
 
     with patch("src.embed.encode", side_effect=_fake):
         yield
