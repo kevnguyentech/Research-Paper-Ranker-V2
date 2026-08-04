@@ -34,9 +34,11 @@ def _get(url: str, params: dict) -> dict:
     headers = {"x-api-key": S2_API_KEY} if S2_API_KEY else {}
     delay = 0.15 if S2_API_KEY else REQUEST_DELAY
 
+    skip_delay = False
     for attempt in range(5):
-        if attempt > 0:
+        if attempt > 0 and not skip_delay:
             time.sleep(delay)
+        skip_delay = False
         try:
             resp = requests.get(url, params=params, headers=headers, timeout=15)
         except requests.exceptions.RequestException as exc:
@@ -51,6 +53,7 @@ def _get(url: str, params: dict) -> dict:
                 wait = 5 + attempt * 2
             print(f"Rate limited. Waiting {wait}s...")
             time.sleep(wait)
+            skip_delay = True
             continue
         if resp.status_code >= 500:
             if attempt == 4:
