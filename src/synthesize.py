@@ -1,3 +1,5 @@
+import time
+
 import requests
 from src.config import SYNTH_MAX_TOKENS, GROQ_MODEL, GROQ_URL, GROQ_API_KEY
 
@@ -43,8 +45,15 @@ Be specific. Name actual papers and authors."""
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": SYNTH_MAX_TOKENS,
     }
-    resp = requests.post(GROQ_URL, headers=headers, json=body, timeout=30)
-    resp.raise_for_status()
+    for attempt in range(5):
+        resp = requests.post(GROQ_URL, headers=headers, json=body, timeout=30)
+        if resp.status_code == 429 and attempt < 4:
+            wait = int(resp.headers.get("Retry-After", 5)) + attempt * 2
+            print(f"Groq rate limited. Waiting {wait}s...")
+            time.sleep(wait)
+            continue
+        resp.raise_for_status()
+        break
     choices = resp.json().get("choices", [])
     if not choices:
         raise ValueError(f"Groq returned no choices. Response: {resp.text[:300]}")
